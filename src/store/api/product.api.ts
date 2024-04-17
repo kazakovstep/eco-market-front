@@ -23,9 +23,16 @@ export const productApi = api.injectEndpoints({
         }),
         getProductsCart: builder.query<Product, void>({
             query: (id) => `/product?id=${id}`,
+        }),
+        getProductsByTitle: builder.query<Product[], string>({
+            query : (title) => `/?title=${title}`
+        }),
+        getProductsByCategory: builder.query<Product[], string>({
+            query : (category) => `/${category}`
         })
     })
 })
 
-export const {useCreateProductMutation, useGetProductsCartQuery, useGetImageByIdMutation} = productApi
+export const {useCreateProductMutation, useGetProductsCartQuery, useGetImageByIdMutation, useGetProductsByTitleQuery,
+useGetProductsByCategoryQuery} = productApi
 

@@ -3,6 +3,7 @@
     background: var(--white);
     transition: 300ms;
     position: relative;
+    width: 15rem;
 }
 
 .card:hover {
@@ -45,7 +46,6 @@
 }
 
 .likeButton {
-    visibility: hidden;
     opacity: 0;
     position: absolute;
     top: 12px;
@@ -68,9 +68,13 @@
     background-image: url("../../public/likeHover.svg");
 }
 
+
 .liked{
+    visibility: visible;
+    opacity: 1;
     background-image: url("../../public/likeLiked.svg");
 }
+
 
 .buyed{
     background-image: url("../../public/buyButtonBuyed.svg");

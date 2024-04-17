@@ -7,6 +7,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10vw;
+    position: relative;
 }
 
 .leftSide {
@@ -68,6 +69,31 @@
     right: -0.5rem;
     padding: 0.6rem;
 }
-.search{
+
+.search {
     cursor: pointer;
+}
+
+.searchMenu {
+    height: 40rem;
+    overflow: hidden;
+    z-index: 100;
+    padding: 1rem;
+    position: absolute;
+    background: var(--white);
+    box-shadow: 0 1px 0 0 #e5e5e5;
+    top: 5.25rem;
+    width: 50%;
+    left: 26%;
+    border: 1px solid var(--gray-700);
+}
+.categoryMenu{
+    left: 26%;
+    position: absolute;
+    top: 5.25rem;
+    z-index: 100;
+    background: var(--white);
+    box-shadow: 0 1px 0 0 #e5e5e5;
+    width: 50%;
+    border: 1px solid var(--gray-700);
 }

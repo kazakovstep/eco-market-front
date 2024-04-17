@@ -12,6 +12,7 @@ import {actions as ProductActions} from "@/store/slices/products.slice";
 import {actions as CartActions} from "@/store/slices/cart.slice";
 import {RootState} from "@/store/store";
 
+
 export const Card = ({
                          data,
                          ...props
@@ -43,7 +44,9 @@ export const Card = ({
 
 
     const [file, setFile] = useState();
-    useEffect(() => {
+
+
+        useEffect(() => {
             if (ids?.includes(data.id)) {
                 setBuyed(true)
             }

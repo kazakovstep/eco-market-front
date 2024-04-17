@@ -1,7 +1,11 @@
+'use client'
+
 import {H} from "../../components/Htag/Htag";
 import {Button} from "../../components/Button/Button";
 import styles from "../styles/page.module.css"
 import {CardRow} from "../../components/CardRow/CardRow";
+import {useGetProductsQuery} from "@/store/api/api";
+import {useEffect} from "react";
 
 
 const Products = [
@@ -12,7 +16,11 @@ const Products = [
     {category: "Хлебные изделия", type: "bread"},
 ];
 
+
 export default function Home() {
+
+    const {data, isLoading, error} = useGetProductsQuery();
+
     return (
         <>
             <div className={styles.first}>
@@ -71,7 +79,9 @@ export default function Home() {
                 {Products.map((product) => (
                     <div key={product.category} className={styles.catalogCategory}>
                         <H type={"h5"}>{product.category}</H>
-                        <CardRow type={product.type}/>
+                        <CardRow type={product.type}
+                            // @ts-ignore
+                                 data={data}/>
                     </div>
                 ))}
             </div>

@@ -3,6 +3,7 @@ import {api} from "./api/api";
 import {reducer as productsSliceReducer} from "@/store/slices/products.slice";
 import {reducer as cartSliceReducer} from "@/store/slices/cart.slice";
 import {reducer as favSliceReducer} from "@/store/slices/favourites.slice"
+import {reducer as searchSliceReducer} from "@/store/slices/search.slice"
 
 import {
     persistStore,
@@ -18,11 +19,11 @@ import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
     key: 'root',
-    version: 1,
-    storage
+    storage,
 }
 
 const reducers = combineReducers({
+    search: searchSliceReducer,
     favourites: favSliceReducer,
     cart: cartSliceReducer,
     products: productsSliceReducer,

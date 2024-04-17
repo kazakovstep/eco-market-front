@@ -1,21 +1,13 @@
 'use client'
 import styles from "./CardRow.module.css"
-import {Product, useGetProductsQuery} from "@/store/api/api";
 import {Card} from "../Card/Card";
-import {CardProps} from "../Card/Card.props";
 import {CardRowProps} from "./CardRowProps.props";
-import {useEffect} from "react";
 
 export const CardRow = ({
+                            data,
                             type,
                             ...props
                         }: CardRowProps) => {
-    const {data, isLoading, error} = useGetProductsQuery();
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
 
     return (
         <div className={styles.cardRow}>
