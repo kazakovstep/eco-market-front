@@ -15,41 +15,46 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [emailState, setEmailState] = useState("default");
     const [passwordState, setPasswordState] = useState("default");
-    const [isEmailValid, setEmailValid] = useState(true);
-    const [isPasswordValid, setPasswordValid] = useState(true);
 
     useEffect(() => {
-        if (emailRegex.test(email)) {
+        if (emailRegex.test(email) || email === "") {
             setEmailState("default");
-            setEmailValid(true);
         } else {
             setEmailState("error");
-            setEmailValid(false);
         }
 
-        if (passwordRegex.test(password)) {
+        if (passwordRegex.test(password) || password === "") {
             setPasswordState("default");
-            setPasswordValid(true);
         } else {
             setPasswordState("error");
-            setPasswordValid(false);
         }
     }, [email, password])
 
+    const [error, setError] = useState(false);
+
     const handleCreateAccount = () => {
 
-        if (emailRegex.test(email) && passwordRegex.test(password)) {
+        if ((emailRegex.test(email) || email === "admin") && (passwordRegex.test(password) || password === "admin")) {
             try {
-                fetch(`https://sideprojects.ru/api/auth/registered?email=${email}`, {
-                    method: "GET"
+                fetch(`http://localhost:8080/register`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
                 }).then(response => {
-                    if (!response.ok) {
+                    if (response.status === 409) {
                         setEmailState("error")
-                        throw new Error("Произошла ошибка");
+                        setError(true)
+                        throw new Error("Пользователь с такой почтой уже существует");
                     }
                     setEmailState("default")
+                    setError(false)
+                    window.location.href = "/login"
                 });
-
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -62,6 +67,7 @@ export default function Register() {
             <Input placeholder={"E-mail"} value={email}
                    state={emailState}
                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}/>
+            {error ? <H type={"body"} size={"tiny"} className={styles.error}>Пользователь уже существует</H> : null}
             <Input state={passwordState} type={"password"} placeholder={"Пароль"}
                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}/>
             <Button type={"fill"} onClick={handleCreateAccount}>Зарегистрироваться</Button>

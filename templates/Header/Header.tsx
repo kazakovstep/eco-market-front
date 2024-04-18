@@ -67,7 +67,7 @@ export const Header = ({
         setCategory(category);
     }
 
-    const {data:productsByCategory} = useGetProductsByCategoryQuery(category);
+    const {data: productsByCategory} = useGetProductsByCategoryQuery(category);
 
 
     return (
@@ -120,7 +120,9 @@ export const Header = ({
                     <img src={"../buy.svg"} alt={"buy"}/>
                     <div className={styles.amount}>{amountCart}</div>
                 </Link>
-                <img src={"../person.svg"} alt={"person"}/>
+                <Link href={localStorage.getItem("token") ? "/lk/orders" : "/login"} className={styles.cart}>
+                    <img src={"../person.svg"} alt={"person"}/>
+                </Link>
             </div>
             {searchMenu ?
                 <div className={styles.searchMenu}>
