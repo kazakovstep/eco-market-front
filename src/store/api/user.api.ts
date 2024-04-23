@@ -1,6 +1,5 @@
 import {api, Product} from "./api";
 
-
 export const token = localStorage.getItem("token");
 
 export interface User {
@@ -8,7 +7,8 @@ export interface User {
     email: string,
     password: string,
     username: string,
-    phone: string
+    phone: string,
+    roles: [{name: string}]
 }
 
 export const userApi = api.injectEndpoints({

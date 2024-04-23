@@ -11,6 +11,7 @@ import {H} from "../Htag/Htag"
 import {Rating} from "../Rating/Rating"
 import styles from "./Card.module.css"
 import {CardProps} from "./Card.props"
+import {token} from "@/store/api/user.api";
 
 
 export const Card = ({
@@ -21,8 +22,12 @@ export const Card = ({
     const [isLiked, setLiked] = useState(false);
 
     const handleLike = () => {
-        dispatch(FavActions.toggleFavourite(data))
-        setLiked(!isLiked)
+        if (token) {
+            dispatch(FavActions.toggleFavourite(data))
+            setLiked(!isLiked)
+        } else {
+            window.location.href = "/login"
+        }
     }
 
     const [isBuyed, setBuyed] = useState(false);
@@ -30,13 +35,17 @@ export const Card = ({
     const dispatch = useDispatch();
 
     const handleBuy = () => {
-        if (isBuyed) {
-            dispatch(CartActions.removeFromCart(data.price));
+        if (token) {
+            if (isBuyed) {
+                dispatch(CartActions.removeFromCart(data.price));
+            } else {
+                dispatch(CartActions.addToCart(data.price));
+            }
+            setBuyed(!isBuyed)
+            dispatch(ProductActions.toggleCart(data))
         } else {
-            dispatch(CartActions.addToCart(data.price));
+            window.location.href = "/login"
         }
-        setBuyed(!isBuyed)
-        dispatch(ProductActions.toggleCart(data))
     }
 
     const ids = useSelector((state: RootState) => state?.products?.map(product => product.id))

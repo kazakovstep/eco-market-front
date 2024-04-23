@@ -11,8 +11,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store/store";
 import {Input} from "../../components/Input/Input";
 import {useGetProductsByCategoryQuery, useGetProductsByTitleQuery} from "@/store/api/product.api";
-import {actions as SearchActions} from "@/store/slices/search.slice"
 import {CardRow} from "../../components/CardRow/CardRow";
+import {token, useGetCurrentUserQuery} from "@/store/api/user.api";
 
 const Products = [
     {category: "Фрукты", type: "fruit"},
@@ -69,6 +69,7 @@ export const Header = ({
 
     const {data: productsByCategory} = useGetProductsByCategoryQuery(category);
 
+    const {data: user} = useGetCurrentUserQuery();
 
     return (
         <header className={cn(styles.header, className)}>
@@ -82,7 +83,9 @@ export const Header = ({
                         <Button type={"text"} onClick={() => handleCategory("milk")}>Молочные продукты</Button>
                         <Button type={"text"} onClick={() => handleCategory("bread")}>Хлебные изделия</Button>
                     </div> : null}
-                <Button type={"text"}>О нас</Button>
+                {user?.roles[0].name === "ROLE_ADMIN" ?
+                    <Button type={"text"}>Админ-панель</Button> : null
+                }
                 {isCategory ?
                     <div className={styles.categoryMenu}>
                         {Products.map((product) => {
@@ -112,15 +115,15 @@ export const Header = ({
                     <H type={"body"} size={"small"}>(219) 555-0114</H>
                 </div>
                 <img src={"../find.svg"} alt={"find"} onClick={handleSearch} className={styles.search}/>
-                <Link href={"/lk/favourites"} className={styles.cart}>
+                <Link href={token ? "/lk/favourites" : "/login"} className={styles.cart}>
                     <img src={"../fav.svg"} alt={"fav"}/>
                     <div className={styles.amount}>{amountFavs}</div>
                 </Link>
-                <Link href={"/lk/cart"} className={styles.cart}>
+                <Link href={token ? "/lk/cart" : "/login"} className={styles.cart}>
                     <img src={"../buy.svg"} alt={"buy"}/>
                     <div className={styles.amount}>{amountCart}</div>
                 </Link>
-                <Link href={localStorage.getItem("token") ? "/lk/orders" : "/login"} className={styles.cart}>
+                <Link href={token ? "/lk/orders" : "/login"} className={styles.cart}>
                     <img src={"../person.svg"} alt={"person"}/>
                 </Link>
             </div>
