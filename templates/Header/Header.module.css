@@ -97,3 +97,6 @@
     width: 50%;
     border: 1px solid var(--gray-700);
 }
+.categoryRow{
+    grid-template-columns: repeat(3, 1fr)!important;
+}

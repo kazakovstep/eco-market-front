@@ -92,7 +92,7 @@ export const Header = ({
                                     <div key={product.category} className={styles.catalogCategory}>
                                         <H type="body" size="large">{product.category}</H>
                                         <CardRow type={product.type}
-                                                 data={filteredData}/>
+                                                 data={filteredData} className={styles.categoryRow}/>
                                     </div>
                                 );
                             }

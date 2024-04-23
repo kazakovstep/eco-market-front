@@ -9,8 +9,9 @@ import Link from "next/link";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store/store";
 import {FavPreview} from "../../../../components/FavPreview/FavPreview";
+import {withAccountLayout} from "@/layout/AccountLayout/AccountLayout";
 
-export default function Page(){
+function Page(){
 
     const favourites = useSelector((state: RootState) => state.favourites?.favourites)
     const totalAmount = useSelector((state : RootState) => state.favourites?.amount)
@@ -43,3 +44,5 @@ export default function Page(){
         </div>
     </div>
 }
+
+export default withAccountLayout(Page)

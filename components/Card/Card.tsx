@@ -1,16 +1,16 @@
 'use client'
 
-import {CardProps} from "./Card.props";
-import cn from "classnames";
-import styles from "./Card.module.css"
-import {useEffect, useState} from "react";
-import {H} from "../Htag/Htag";
-import {Rating} from "../Rating/Rating";
-import {useDispatch, useSelector} from "react-redux";
+import {actions as CartActions} from "@/store/slices/cart.slice"
 import {actions as FavActions} from "@/store/slices/favourites.slice"
-import {actions as ProductActions} from "@/store/slices/products.slice";
-import {actions as CartActions} from "@/store/slices/cart.slice";
-import {RootState} from "@/store/store";
+import {actions as ProductActions} from "@/store/slices/products.slice"
+import {RootState} from "@/store/store"
+import cn from "classnames"
+import {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {H} from "../Htag/Htag"
+import {Rating} from "../Rating/Rating"
+import styles from "./Card.module.css"
+import {CardProps} from "./Card.props"
 
 
 export const Card = ({
@@ -30,7 +30,7 @@ export const Card = ({
     const dispatch = useDispatch();
 
     const handleBuy = () => {
-        if(isBuyed){
+        if (isBuyed) {
             dispatch(CartActions.removeFromCart(data.price));
         } else {
             dispatch(CartActions.addToCart(data.price));
@@ -46,11 +46,11 @@ export const Card = ({
     const [file, setFile] = useState();
 
 
-        useEffect(() => {
+    useEffect(() => {
             if (ids?.includes(data.id)) {
                 setBuyed(true)
             }
-            if(favIds?.includes(data.id)){
+            if (favIds?.includes(data.id)) {
                 setLiked(true);
             }
             try {

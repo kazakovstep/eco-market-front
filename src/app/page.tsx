@@ -6,6 +6,7 @@ import styles from "../styles/page.module.css"
 import {CardRow} from "../../components/CardRow/CardRow";
 import {useGetProductsQuery} from "@/store/api/api";
 import {useEffect} from "react";
+import {withMainLayout} from "@/layout/MainLayout/MainLayout";
 
 
 const Products = [
@@ -17,7 +18,7 @@ const Products = [
 ];
 
 
-export default function Home() {
+function Home() {
 
     const {data, isLoading, error} = useGetProductsQuery();
 
@@ -88,3 +89,5 @@ export default function Home() {
         </>
     );
 }
+
+export default withMainLayout(Home)

@@ -1,13 +1,16 @@
 'use client'
-import styles from "./CartPreview.module.css"
-import {CardRowProps} from "./CartPreviewProps.props";
-import {H} from "../Htag/Htag";
-import {useEffect, useState} from "react";
-import {Button} from "../Button/Button";
-import {actions as CartActions} from "@/store/slices/cart.slice";
-import {useDispatch, useSelector} from "react-redux";
+import {actions as CartActions} from "@/store/slices/cart.slice"
 import {actions as ProductActions} from "@/store/slices/products.slice"
+import {RootState} from '@/store/store'
+import {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {Button} from "../Button/Button"
+import {H} from "../Htag/Htag"
+import styles from "./CartPreview.module.css"
+import {CardRowProps} from "./CartPreviewProps.props"
+
 export const CartPreview = ({
+                                index,
                                 product
                             }: CardRowProps) => {
 
@@ -31,25 +34,31 @@ export const CartPreview = ({
         }, [product]
     )
 
-    const [amount, setAmount] = useState(1);
+    const arr = useSelector((state: RootState) => state.cart?.quantities)
 
     const dispatch = useDispatch();
 
     const handleMinus = () => {
-        if(amount != 1){
-            setAmount(prev => prev - 1)
+        if (arr[index] != 1) {
+            dispatch(CartActions.removeFromCartSum(product.price));
+            dispatch(CartActions.updateQuantity({index, amount: arr[index] - 1}));
         }
-        dispatch(CartActions.removeFromCartSum(product.price));
+        if (arr[index] == 1) {
+            dispatch(CartActions.removeFromCart(product.price));
+            dispatch(ProductActions.toggleCart(product));
+            dispatch(CartActions.deleteQuantity(index));
+        }
     }
 
     const handlePlus = () => {
-        setAmount(prev => prev + 1)
         dispatch(CartActions.addToCartSum(product.price));
+        dispatch(CartActions.updateQuantity({index, amount: arr[index] + 1}));
     }
 
     const handleDelete = () => {
-        dispatch(CartActions.removeFromCart(product.price * amount));
+        dispatch(CartActions.removeFromCart(product.price * arr[index]));
         dispatch(ProductActions.toggleCart(product));
+        dispatch(CartActions.deleteQuantity(index));
     }
 
 
@@ -65,11 +74,11 @@ export const CartPreview = ({
             <th>
                 <div className={styles.amount}>
                     <Button type={"fill"} className={styles.amountButton} onClick={handleMinus}>-</Button>
-                    <H type="body" size="medium">{amount}</H>
+                    <H type="body" size="medium">{arr[index]}</H>
                     <Button type={"fill"} className={styles.amountButton} onClick={handlePlus}>+</Button>
                 </div>
             </th>
-            <th><H type="body" size="medium">{product.price * amount} руб.</H></th>
+            <th><H type="body" size="medium">{product.price * arr[index]} руб.</H></th>
             <th><Button type={"border"} className={styles.amountButton} onClick={handleDelete}>x</Button></th>
         </tr>
     );

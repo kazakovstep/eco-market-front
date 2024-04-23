@@ -17,6 +17,9 @@ export const productsSlice = createSlice({
                 }
             } else
                 state.push(product)
+        },
+        removeAll: (state: Product[]) => {
+            state.length = 0
         }
     },
 })

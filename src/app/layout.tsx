@@ -29,11 +29,7 @@ export default function RootLayout({
         </head>
         <body>
         <ReduxProvider>
-            <Header/>
-            <div className={"page"}>
-                {children}
-            </div>
-            <Footer/>
+            {children}
         </ReduxProvider>
         </body>
         </html>

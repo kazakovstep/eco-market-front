@@ -1,19 +1,64 @@
 'use client'
-import styles from "../../../styles/cart.module.css"
-import {H} from "../../../../components/Htag/Htag";
-import {useSelector} from "react-redux";
-import {RootState} from "@/store/store";
-import {CartPreview} from "../../../../components/CartPreview/CartPreview";
-import {Button} from "../../../../components/Button/Button";
-import cn from "classnames";
-import Link from "next/link";
 
-export default function Page() {
+import { withAccountLayout } from "@/layout/AccountLayout/AccountLayout"
+import { useGetCurrentUserQuery } from "@/store/api/user.api"
+import { RootState } from "@/store/store"
+import cn from "classnames"
+import Link from "next/link"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Button } from "../../../../components/Button/Button"
+import { CartPreview } from "../../../../components/CartPreview/CartPreview"
+import { H } from "../../../../components/Htag/Htag"
+import styles from "../../../styles/cart.module.css"
+import {actions as CartActions} from "../../../store/slices/cart.slice"
+import {actions as ProductActions} from "../../../store/slices/products.slice"
+
+function Page() {
 
     const products = useSelector((state: RootState) => state.products);
 
-    const totalPrice = useSelector((state: RootState) => state.cart?.totalCost)
-    const totalAmount = useSelector((state: RootState) => state.cart?.totalItems)
+    const totalPrice = useSelector((state: RootState) => state.cart?.totalCost);
+
+    const totalAmount = useSelector((state: RootState) => state.cart?.totalItems);
+
+    const userId = useGetCurrentUserQuery().data?.id;
+
+    const [isOrdered, setIsOrdered] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const quantities = useSelector((state: RootState) => state.cart?.quantities)
+
+
+    const handleBuy = () => {
+        try {
+            fetch(`http://localhost:8080/orders`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    productIds: products?.map(product => product.id),
+                    cost: totalPrice,
+                    amount: totalAmount,
+                    quantities: quantities
+                })
+            }).then(r => {
+                if (r.ok) {
+                    dispatch(CartActions.removeAll())
+                    dispatch(ProductActions.removeAll())
+                    setIsOrdered(true)
+                    setTimeout(() => {
+                        setIsOrdered(false);
+                    }, 2000);
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return <div className={styles.page}>
         <H type={"h5"} weight={400}>Моя корзина</H>
@@ -30,8 +75,8 @@ export default function Page() {
                             <th><H type={"body"} size={"small"}>КОЛИЧЕСТВО</H></th>
                             <th><H type={"body"} size={"small"}>ИТОГО</H></th>
                         </tr>
-                        {products?.map((product) => (
-                            <CartPreview product={product} key={product.id}/>
+                        {products?.map((product, index) => (
+                            <CartPreview product={product} index={index} key={product.id}/>
                         ))}
                         </tbody>
                     </table>
@@ -53,7 +98,8 @@ export default function Page() {
                             <th><H type={"body"} size={"small"} weight={500}>{totalPrice} руб.</H></th>
                         </tr>
                         <tr>
-                            <th><Button type={"fill"} className={styles.doOrder}>Оформить заказ</Button></th>
+                            <th><Button type={"fill"} className={styles.doOrder} onClick={handleBuy}>Оформить
+                                заказ</Button></th>
                         </tr>
                         </tbody>
                     </table>
@@ -64,5 +110,11 @@ export default function Page() {
                 </>
             }
         </div>
+        {isOrdered ?
+            <div className={styles.success}>
+                <H type={"body"} size={"xl"} className={styles.successText}>Заказ успешно создан 🙌</H>
+            </div> : null}
     </div>
 }
+
+export default withAccountLayout(Page)

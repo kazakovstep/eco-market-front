@@ -17,11 +17,6 @@ a {
     box-sizing: border-box;
 }
 
-.page{
-    width:80%;
-    margin: 0 auto;
-}
-
 :root {
     --font-family: "Comfortaa", sans-serif;
     --second-family: "Inter", sans-serif;

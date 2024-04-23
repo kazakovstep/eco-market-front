@@ -1,10 +1,11 @@
-import {DetailedHTMLProps, HTMLAttributes, ReactNode} from "react";
-import {Product} from "@/store/api/api";
+import { Product } from "@/store/api/api"
+import { DetailedHTMLProps, HTMLAttributes } from "react"
 
 export interface CardRowProps
     extends DetailedHTMLProps<
         HTMLAttributes<HTMLDivElement>,
         HTMLDivElement
     >{
-    product: Product
+        index: number,
+        product: Product
 }
