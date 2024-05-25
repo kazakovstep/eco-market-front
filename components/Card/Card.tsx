@@ -12,6 +12,7 @@ import {Rating} from "../Rating/Rating"
 import styles from "./Card.module.css"
 import {CardProps} from "./Card.props"
 import {token} from "@/store/api/user.api";
+import Link from "next/link";
 
 
 export const Card = ({
@@ -63,7 +64,7 @@ export const Card = ({
                 setLiked(true);
             }
             try {
-                fetch(`http://localhost:8080/image/${data.id}`, {
+                fetch(`http://localhost:8808/image/${data.id}`, {
                     method: "POST",
                 }).then(response => response.blob())
                     .then(data => {
@@ -81,7 +82,7 @@ export const Card = ({
     )
 
     return (
-        <div className={styles.card}>
+        <Link href={`/product/${data.id}`} className={styles.card}>
             <img src={file} className={styles.image} alt={data.title}/>
             <div className={styles.buyInfo}>
                 <div className={styles.info}>
@@ -96,6 +97,6 @@ export const Card = ({
             <button className={cn(styles.likeButton, {
                 [styles.liked]: isLiked
             })} onClick={handleLike}/>
-        </div>
+        </Link>
     );
 };

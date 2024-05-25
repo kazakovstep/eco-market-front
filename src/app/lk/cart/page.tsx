@@ -33,7 +33,7 @@ function Page() {
 
     const handleBuy = () => {
         try {
-            fetch(`http://localhost:8080/orders`, {
+            fetch(`http://localhost:8808/orders`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

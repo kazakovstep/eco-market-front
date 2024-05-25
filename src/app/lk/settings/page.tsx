@@ -43,7 +43,7 @@ function Page() {
     const handleUpdate = () => {
         if ((emailRegex.test(email) || email === "") && (passwordRegex.test(password) || password === "") && (username !== "" || user?.username !== "")) {
             try {
-                fetch(`http://localhost:8080/user`, {
+                fetch(`http://localhost:8808/user`, {
                     method: "PUT",
                     headers: {
                         'Content-Type': 'application/json'

@@ -21,7 +21,7 @@ export const productApi = api.injectEndpoints({
                 type: 'Product',
             }]
         }),
-        getProductsCart: builder.query<Product, void>({
+        getProductsCart: builder.query<Product, number>({
             query: (id) => `/product?id=${id}`,
         }),
         getProductsByTitle: builder.query<Product[], string>({

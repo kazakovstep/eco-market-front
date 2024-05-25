@@ -10,6 +10,7 @@ export const Input = ({
                           state = "default",
                           value,
                           type,
+                          id,
                           placeholder,
                           onChange,
                           className,
@@ -44,12 +45,14 @@ export const Input = ({
 
 
     return (<div className={styles.inputContainer}>
-        <input className={cn(styles.input, {
+        <input id={id} className={cn(styles.input, {
             [styles.success]: isFilled || state === "success" && type != "password",
             [styles.successPassword]: isFilled || state === "success" && type == "password",
             [styles.error]: state == "error" && type != "password",
-            [styles.errorPassword]: state == "error" && type == "password"
+            [styles.errorPassword]: state == "error" && type == "password",
+            [styles.disable]: state == "disable"
         })}
+               readOnly={state == "disable"}
                placeholder={placeholder}
                type={showPassword ? "text" : type}
                value={inputValue}

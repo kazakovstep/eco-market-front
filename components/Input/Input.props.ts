@@ -6,7 +6,7 @@ export interface InputProps
     HTMLInputElement
   > {
   name?: string;
-  state?: "default" | "success" | "error" | string;
+  state?: "default" | "success" | "error" | "disable" | string;
   value?: string | number;
   type?: string;
   placeholder?: string;

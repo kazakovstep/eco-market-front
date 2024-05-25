@@ -71,6 +71,8 @@ export const Header = ({
 
     const {data: user} = useGetCurrentUserQuery();
 
+    console.log(user)
+
     return (
         <header className={cn(styles.header, className)}>
             <div className={styles.leftSide}>
@@ -84,7 +86,9 @@ export const Header = ({
                         <Button type={"text"} onClick={() => handleCategory("bread")}>Хлебные изделия</Button>
                     </div> : null}
                 {user?.roles[0].name === "ROLE_ADMIN" ?
-                    <Button type={"text"}>Админ-панель</Button> : null
+                    <Link href={"/admin/products"} style={{display: "flex", alignItems: "center"}}>
+                        <Button type={"text"}>Админ-панель</Button>
+                    </Link> : null
                 }
                 {isCategory ?
                     <div className={styles.categoryMenu}>

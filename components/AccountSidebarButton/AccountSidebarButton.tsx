@@ -11,6 +11,8 @@ import CartImg from "../../public/cart.svg"
 import HistoryImg from "../../public/history.svg"
 import LikeImg from "../../public/heart.svg"
 import SettingsImg from "../../public/setting.svg"
+import PersonImg from "../../public/person.svg"
+import FoodImg from "../../public/food.svg"
 
 export const AccountSidebarButton = ({
                                          content,
@@ -44,6 +46,15 @@ export const AccountSidebarButton = ({
             case "Настройки":
                 switchHref("/lk/settings")
                 break
+            case "Пользователи":
+                switchHref("/admin/users")
+                break
+            case "Продукты":
+                switchHref("/admin/products")
+                break
+            case "Заказы":
+                switchHref("/admin/orders")
+                break
             default:
                 break
         }
@@ -67,8 +78,10 @@ export const AccountSidebarButton = ({
                         content === "Мои заказы" ? <HistoryImg className={active ? styles.activeImg : undefined}/> :
                             content === "Избранное" ? <LikeImg className={active ? styles.activeImg : undefined}/> :
                                 content === "Корзина" ? <CartImg className={active ? styles.activeImg : undefined}/> :
-                                    content === "Настройки" ?
-                                        <SettingsImg className={active ? styles.activeImg : undefined}/> : null
+                                    content === "Настройки" ? <SettingsImg className={active ? styles.activeImg : undefined}/> :
+                                        content === "Пользователи" ? <PersonImg className={active ? styles.activeImg : undefined}/> :
+                                            content === "Продукты" ? <FoodImg className={active ? styles.activeImg : undefined}/> :
+                                                content === "Заказы" ? <CartImg className={active ? styles.activeImg : undefined}/> : null
                 }
                 <H type={"body"} size={"large"}>{content}</H>
             </li>

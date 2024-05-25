@@ -48,3 +48,9 @@
     border: 1px solid var(--danger);
     background: var(--white);
 }
+
+.disable{
+    border: 1px solid var(--gray-100);
+    background: var(--gray-50);
+    color: var(--gray-100);
+}

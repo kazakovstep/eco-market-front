@@ -38,7 +38,7 @@ export default function Login() {
 
         if ((emailRegex.test(email) || email === "admin") && (passwordRegex.test(password) || password === "admin")) {
             try {
-                fetch(`http://localhost:8080/auth`, {
+                fetch(`http://localhost:8808/auth`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'

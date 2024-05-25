@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "http://localhost:8808";
 
 export const api = createApi({
     reducerPath: 'api',
@@ -28,4 +28,9 @@ export interface Product {
     amount: number;
     category: string;
     image: string;
+    calories: number;
+    cellulose: number;
+    fats: number;
+    proteins: number;
+    carbohydrates: number;
 }

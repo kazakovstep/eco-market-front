@@ -22,7 +22,7 @@ export const OrderPage = ({
         console.log(order?.orderProducts)
         if (order && order.orderProducts) {
             order.orderProducts.forEach((product) => {
-                fetch(`http://localhost:8080/image/${product.product.id}`, {
+                fetch(`http://localhost:8808/image/${product.product.id}`, {
                     method: "POST",
                 })
                 .then(response => {
